@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Service;
+use App\Models\Invoice;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -10,7 +12,50 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function ownerDashboardPage(){
-        return view('dashboard');
+        try {
+            
+            $totalInvoices = Invoice::count();
+            $paidInvoices = Invoice::where('status', '=', 'Paid')->count();
+            $unpaidInvoices = Invoice::where('status', '=', 'Unpaid')->count();
+          
+            $totalPaidRevenue = Invoice::where('status', '=', 'Paid')->sum('price');
+            $totalUnpaidRevenue = Invoice::where('status', '=', 'Unpaid')->sum('price');
+          
+            $totalSales = $totalPaidRevenue + $totalUnpaidRevenue;
+          
+            if ($totalSales > 0) {
+              $collectionEfficiency = round((($totalSales - $totalUnpaidRevenue) / $totalSales) * 100,2);
+            } else {
+              $collectionEfficiency = 0; 
+            }
+
+            $totalInvoices = Invoice::count();
+
+            if ($totalInvoices === 0 || $totalSales === 0) {
+            $averageInvoiceValue = 0; 
+            } else {
+            $averageInvoiceValue = $totalSales / $totalInvoices;
+            }
+
+            return view('dashboard', compact([
+              'totalInvoices', 
+              'paidInvoices', 
+              'unpaidInvoices',
+              'totalPaidRevenue',
+              'totalUnpaidRevenue',
+              'collectionEfficiency',
+              'averageInvoiceValue',
+              'totalSales',
+            ]));
+          
+          } catch (QueryException $e) {
+            
+            report($e); 
+            $error = 'An error occurred while retrieving data. Please try again later.';
+            
+            return view('dashboard', compact('error'));
+          }
+          
     }
 
     public function userRegistrationPage(){
