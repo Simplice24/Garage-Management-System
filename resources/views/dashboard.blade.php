@@ -141,7 +141,7 @@
                                     <i class="ti-layout-grid2 text-pink border-pink"></i>
                                 </div>
                                 <div class="stat-content d-inline-block">
-                                    <div class="stat-text">Paid invoice</div>
+                                    <div class="stat-text">Paid invoices</div>
                                     <div class="stat-digit">{{ $paidInvoices }}</div>
                                 </div>
                             </div>
