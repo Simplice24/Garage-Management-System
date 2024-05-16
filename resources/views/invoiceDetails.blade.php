@@ -9,12 +9,12 @@
     <title>Focus - Bootstrap Admin Dashboard </title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    <link href="./vendor/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
-    <link href="./vendor/chartist/css/chartist.min.css" rel="stylesheet">
+    <link href="/Update/vendor/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
+    <link href="/Update/vendor/chartist/css/chartist.min.css" rel="stylesheet">
     <!-- Datatable -->
-    <link href="./vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="/Update/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 
-    <link href="./css/style.css" rel="stylesheet">
+    <link href="/Update/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -117,66 +117,88 @@
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
                             <h4>Hi, welcome back!</h4>
-                            <span class="ml-1">Your garage invoices</span>
+                            <span class="ml-1">Invoice details</span>
                         </div>
                     </div>
                 </div>
                 <!-- row -->
 
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Garage Invoices</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="example" class="display" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Customer</th>
-                                                <th>Phone</th>
-                                                <th>Issue date</th>
-                                                <th>Price</th>
-                                                <th>Invoice number</th>
-                                                <th>Status</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($invoices as $invoice)
-                                                <tr>
-                                                    <td>{{ $invoice->customer_name }}</td>
-                                                    <td>{{ $invoice->customer_phone }}</td>
-                                                    <td>{{ $invoice->date }}</td>
-                                                    <td>{{ $invoice->price }}</td>
-                                                    <td>{{ $invoice->invoice_number }}</td>
-                                                    <td>{{ $invoice->status }}</td>
-                                                    <td>
-                                                        <div class="dropdown">
-                                                        <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">action</button>
-                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="{{ route('view.invoice.details', ['id' => $invoice->id]) }}">View</a>
-                                                                <a class="dropdown-item" href="{{ route('delete.invoice', ['id' => $invoice->id]) }}" >Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach    
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Customer</th>
-                                                <th>Phone</th>
-                                                <th>Issue date</th>
-                                                <th>Price</th>
-                                                <th>Invoice number</th>
-                                                <th>Status</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                <div class="container-fluid">
+                  <div class="row justify-content-center">
+                      <div class="col-lg-8">
+                          <div class="card mb-3">
+                              <div class="card-body w-100">
+                                  <div class="row">
+                                      <div class="col-sm-3">
+                                          <h6 class="mb-0">Customer</h6>
+                                      </div>
+                                      <div class="col-sm-9 text-dark">
+                                          {{ $invoices[0]->customer_name }}
+                                      </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                      <div class="col-sm-3">
+                                          <h6 class="mb-0">Phone</h6>
+                                      </div>
+                                      <div class="col-sm-9 text-dark">
+                                          {{ $invoices[0]->customer_phone }}
+                                      </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                      <div class="col-sm-3">
+                                          <h6 class="mb-0">Issue date</h6>
+                                      </div>
+                                      <div class="col-sm-9 text-dark">
+                                          {{ $invoices[0]->date }}
+                                      </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                      <div class="col-sm-3">
+                                          <h6 class="mb-0">Services</h6>
+                                      </div>
+                                      <div class="col-sm-9 text-dark">
+                                          @foreach($invoices as $invoice)
+                                                  {{ $invoice->service_name }} - ${{ $invoice->service_price }}<br>
+                                          @endforeach
+                                      </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                      <div class="col-sm-3">
+                                          <h6 class="mb-0">Price</h6>
+                                      </div>
+                                      <div class="col-sm-9 text-dark">
+                                          {{ $invoices[0]->price }}
+                                      </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                      <div class="col-sm-3">
+                                          <h6 class="mb-0">Invoice number</h6>
+                                      </div>
+                                      <div class="col-sm-9 text-dark">
+                                          {{ $invoices[0]->invoice_number }}
+                                      </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                      <div class="col-sm-3">
+                                          <h6 class="mb-0">Status</h6>
+                                      </div>
+                                      <div class="col-sm-9 text-dark">
+                                          {{ $invoices[0]->status }}
+                                      </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                      <div class="col-sm-12">
+                                          <a class="btn btn-primary mr-2" href="{{ route('edit.invoice',['id' => $invoices[0]->id]) }}"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a>
+                                      </div>
+                                  </div>
                                 </div>
                             </div>
                         </div>
@@ -211,15 +233,15 @@
         Scripts
     ***********************************-->
     <!-- Required vendors -->
-    <script src="./vendor/global/global.min.js"></script>
-    <script src="./js/quixnav-init.js"></script>
-    <script src="./js/custom.min.js"></script>
+    <script src="/Update/vendor/global/global.min.js"></script>
+    <script src="/Update/js/quixnav-init.js"></script>
+    <script src="/Update/js/custom.min.js"></script>
     
 
 
     <!-- Datatable -->
-    <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="./js/plugins-init/datatables.init.js"></script>
+    <script src="/Update/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/Update/js/plugins-init/datatables.init.js"></script>
 
     <!-- Circle progress -->
 

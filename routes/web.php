@@ -46,4 +46,12 @@ Route::get('services/{id}', [ServiceController::class, 'updateServicePage'])->na
 
 Route::put('update_service/{id}', [ServiceController::class, 'updateService'])->name('update.service');
 
+Route::get('delete_invoice/{id}',[invoiceController::class,'deleteInvoice'])->name('delete.invoice');
+
+Route::get('invoice_details/{id}',[invoiceController::class,'invoiceDetails'])->name('view.invoice.details');
+
+Route::get('invoice/{id}',[invoiceController::class,'invoiceUpdatePage'])->name('edit.invoice');
+
+Route::put('update_invoice/{id}',[invoiceController::CLASS,'updateInvoice'])->name('update.invoice');
+
 });

@@ -9,11 +9,11 @@ class Invoice extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['service_id', 'price', 'date', 'status'];
+    protected $fillable = ['customer_name','customer_phone', 'price', 'date', 'status', 'invoice_number'];
 
     
     public function services()
     {
-        return $this->belongsToMany(Service::class)->withPivot('price');
+        return $this->belongsToMany(Service::class);
     }
 }

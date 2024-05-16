@@ -13,6 +13,6 @@ class Service extends Model
 
     public function invoices()
     {
-        return $this->belongsToMany(Invoice::class)->withPivot('price');
+        return $this->belongsToMany(Invoice::class);
     }
 }

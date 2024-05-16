@@ -6,12 +6,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Focus - Bootstrap Admin Dashboard </title>
+    <title>Garage Management System</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    <link href="./vendor/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
-    <link href="./vendor/chartist/css/chartist.min.css" rel="stylesheet">
-    <link href="./css/style.css" rel="stylesheet">
+    <link href="/Update/vendor/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
+    <link href="/Update/vendor/chartist/css/chartist.min.css" rel="stylesheet">
+    <link href="/Update/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -123,63 +123,64 @@
                     <div class="col-xl-6 col-xxl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Invoice creation form</h4>
+                                <h4 class="card-title">Update invoice details</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
-                                    <form id="invoiceForm" action="{{ route('create.invoice') }}" method="POST">
-                                        @csrf
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label>Customer Name</label>
-                                                <input type="text" class="form-control @error('customer_name') is-invalid @enderror" value="{{ old('customer_name') }}" name="customer_name" placeholder="Customer Name">
-                                                @error('customer_name')
-                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Customer Phone</label>
-                                                <input type="text" class="form-control @error('customer_phone') is-invalid @enderror" value="{{ old('customer_phone') }}" name="customer_phone" placeholder="Customer Phone">
-                                                @error('customer_phone')
-                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Service</label>
-                                                <select class="form-control @error('service') is-invalid @enderror" name="service[]" multiple id="serviceSelect" onchange="calculateTotalPrice()">
-                                                    @foreach($services as $service)
-                                                        <option value="{{ $service->id }}" data-price="{{ $service->price }}">{{ $service->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <input type="hidden" id="selectedServices" name="selectedServices">
-                                                @error('service')
-                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Total Price</label>
-                                                <input type="number" class="form-control @error('price') is-invalid @enderror" value="{{ old('price') }}" name="price" id="totalPrice" placeholder="Total price" readonly>
-                                                @error('price')
-                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Date</label>
-                                                <input type="date" class="form-control @error('date') is-invalid @enderror" name="date">
-                                                @error('date')
-                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Status</label>
-                                                <select class="form-control" name="status">
-                                                    <option value="paid">Paid</option>
-                                                    <option value="unpaid">Unpaid</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Create</button>
-                                    </form>
+                                  <form id="invoiceForm" action="{{ route('update.invoice', $invoice->id) }}" method="POST">
+                                      @csrf
+                                      @method('PUT')
+                                      <div class="form-row">
+                                          <div class="form-group col-md-6">
+                                              <label>Customer Name</label>
+                                              <input type="text" class="form-control @error('customer_name') is-invalid @enderror" value="{{ old('customer_name', $invoice->customer_name) }}" name="customer_name" placeholder="Customer Name">
+                                              @error('customer_name')
+                                                  <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                              @enderror
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label>Customer Phone</label>
+                                              <input type="text" class="form-control @error('customer_phone') is-invalid @enderror" value="{{ old('customer_phone', $invoice->customer_phone) }}" name="customer_phone" placeholder="Customer Phone">
+                                              @error('customer_phone')
+                                                  <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                              @enderror
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label>Service</label>
+                                              <select class="form-control @error('service') is-invalid @enderror" name="service[]" multiple id="serviceSelect" onchange="calculateTotalPrice()">
+                                                  @foreach($services as $service)
+                                                      <option value="{{ $service->id }}" {{ in_array($service->id, $invoice->services->pluck('id')->toArray()) ? 'selected' : '' }}>{{ $service->name }}</option>
+                                                  @endforeach
+                                              </select>
+                                              <input type="hidden" id="selectedServices" name="selectedServices">
+                                              @error('service')
+                                                  <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                              @enderror
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label>Total Price</label>
+                                              <input type="number" class="form-control @error('price') is-invalid @enderror" value="{{ old('price', $invoice->price) }}" name="price" id="totalPrice" placeholder="Total price" readonly>
+                                              @error('price')
+                                                  <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                              @enderror
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label>Date</label>
+                                              <input type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date', $invoice->date) }}">
+                                              @error('date')
+                                                  <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                              @enderror
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label>Status</label>
+                                              <select class="form-control" name="status">
+                                                  <option value="paid" {{ old('status', $invoice->status) == 'paid' ? 'selected' : '' }}>Paid</option>
+                                                  <option value="unpaid" {{ old('status', $invoice->status) == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
+                                              </select>
+                                          </div>
+                                      </div>
+                                      <button type="submit" class="btn btn-primary">Update</button>
+                                  </form>
                                 </div>
                             </div>
                         </div>
@@ -214,16 +215,16 @@
         Scripts
     ***********************************-->
     <!-- Required vendors -->
-    <script src="./vendor/global/global.min.js"></script>
-    <script src="./js/quixnav-init.js"></script>
-    <script src="./js/custom.min.js"></script>
+    <script src="/Update/vendor/global/global.min.js"></script>
+    <script src="/Update/js/quixnav-init.js"></script>
+    <script src="/Update/js/custom.min.js"></script>
 
-    <script src="./vendor/chartist/js/chartist.min.js"></script>
+    <script src="/Update/vendor/chartist/js/chartist.min.js"></script>
 
-    <script src="./vendor/moment/moment.min.js"></script>
-    <script src="./vendor/pg-calendar/js/pignose.calendar.min.js"></script>
+    <script src="/Update/vendor/moment/moment.min.js"></script>
+    <script src="/Update/vendor/pg-calendar/js/pignose.calendar.min.js"></script>
 
-    <script src="./js/dashboard/dashboard-2.js"></script>
+    <script src="/Update/js/dashboard/dashboard-2.js"></script>
     <!-- Circle progress -->
 
     <script>
@@ -253,6 +254,10 @@
             });
         });
     </script>
+    
+
+
+
 </body>
 
 </html>

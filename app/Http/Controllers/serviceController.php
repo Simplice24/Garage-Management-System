@@ -54,7 +54,6 @@ class serviceController extends Controller
             'description' => 'nullable|string',
         ]);
     
-        // Check if the name already exists, excluding the current record
         $existingService = Service::where('name', $validatedData['name'])
             ->where('id', '!=', $id)
             ->exists();
