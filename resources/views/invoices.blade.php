@@ -87,13 +87,8 @@
                     <li><a href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-chart-bar-33"></i><span class="nav-text">Invoices</span></a>
                     </li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-single-copy-06"></i><span class="nav-text">Actions</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="{{ route('user.registration') }}">Register new user</a></li>
-                            <li><a href="{{ route('register.service.page') }}">Register new service</a></li>
-                            <li><a href="{{ route('create.invoice.page') }}">Create an invoice</a></li>
-                        </ul>
+                    <li><a href="{{ route('logout') }}" aria-expanded="false"><i class="fa fa-sign-out"></i><span
+                            class="nav-text">Logout</span></a>
                     </li>
                 </ul>
             </div>
