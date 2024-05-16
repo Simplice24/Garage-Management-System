@@ -11,6 +11,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     <link href="./vendor/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
     <link href="./vendor/chartist/css/chartist.min.css" rel="stylesheet">
+    <!-- Datatable -->
+    <link href="./vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+
     <link href="./css/style.css" rel="stylesheet">
 
 </head>
@@ -114,60 +117,57 @@
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
                             <h4>Hi, welcome back!</h4>
-                            <p class="mb-0">Your business dashboard</p>
+                            <span class="ml-1">Your garage services</span>
                         </div>
                     </div>
                 </div>
+                <!-- row -->
+
 
                 <div class="row">
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-12">
                         <div class="card">
-                            <div class="stat-widget-one card-body">
-                                <div class="stat-icon d-inline-block">
-                                    <i class="ti-money text-success border-success"></i>
-                                </div>
-                                <div class="stat-content d-inline-block">
-                                    <div class="stat-text">Profit</div>
-                                    <div class="stat-digit">1,012</div>
-                                </div>
+                            <div class="card-header">
+                                <h4 class="card-title">Garage services</h4>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="stat-widget-one card-body">
-                                <div class="stat-icon d-inline-block">
-                                    <i class="ti-user text-primary border-primary"></i>
-                                </div>
-                                <div class="stat-content d-inline-block">
-                                    <div class="stat-text">Customer</div>
-                                    <div class="stat-digit">961</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="stat-widget-one card-body">
-                                <div class="stat-icon d-inline-block">
-                                    <i class="ti-layout-grid2 text-pink border-pink"></i>
-                                </div>
-                                <div class="stat-content d-inline-block">
-                                    <div class="stat-text">Projects</div>
-                                    <div class="stat-digit">770</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card">
-                            <div class="stat-widget-one card-body">
-                                <div class="stat-icon d-inline-block">
-                                    <i class="ti-link text-danger border-danger"></i>
-                                </div>
-                                <div class="stat-content d-inline-block">
-                                    <div class="stat-text">Referral</div>
-                                    <div class="stat-digit">2,781</div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>Price</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($services as $service)
+                                                <tr>
+                                                    <td>{{ $service->name }}</td>
+                                                    <td>{{ $service->description }}</td>
+                                                    <td>{{ $service->price }}</td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                        <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">action</button>
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="{{ route('edit.service.index', ['id' => $service->id]) }}">Update</a>
+                                                                <a class="dropdown-item" href="{{ route('delete.service', ['id' => $service->id]) }}" >Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach    
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>Price</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -205,14 +205,13 @@
     <script src="./vendor/global/global.min.js"></script>
     <script src="./js/quixnav-init.js"></script>
     <script src="./js/custom.min.js"></script>
-
-    <script src="./vendor/chartist/js/chartist.min.js"></script>
-
-    <script src="./vendor/moment/moment.min.js"></script>
-    <script src="./vendor/pg-calendar/js/pignose.calendar.min.js"></script>
+    
 
 
-    <script src="./js/dashboard/dashboard-2.js"></script>
+    <!-- Datatable -->
+    <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="./js/plugins-init/datatables.init.js"></script>
+
     <!-- Circle progress -->
 
 </body>

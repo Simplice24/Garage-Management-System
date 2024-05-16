@@ -29,7 +29,7 @@ class loginController extends Controller
                 return redirect()->intended('owner_dashboard');
             }
 
-            throw new \Exception("The provided credentials do not match system's record.");
+            throw new \Exception("The provided credentials do not match the system's record.");
         } catch (\Exception $e) {
             return back()->withErrors([
                 'email' => $e->getMessage(),

@@ -114,7 +114,7 @@
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
                             <h4>Hi, welcome back!</h4>
-                            <p class="mb-0">Your business dashboard</p>
+                            <p class="mb-0">Your garage dashboard</p>
                         </div>
                     </div>
                 </div>

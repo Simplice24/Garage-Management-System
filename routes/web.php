@@ -16,7 +16,7 @@ Route::get('/', function () {
 
 Route::post('login',[loginController::class,'userAuthentication'])->name('login');
 
-Route::get('login',[loginController::class,'login'])->name('login');
+Route::get('login',[loginController::class,'login'])->name('login.index');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -39,5 +39,11 @@ Route::post('registering_new_service',[serviceController::class,'registerNewServ
 Route::get('create_invoice',[invoiceController::class,'createInvoicePage'])->name('create.invoice.page');
 
 Route::post('create_invoice',[invoiceController::class,'createInvoice'])->name('create.invoice');
+
+Route::get('delete_service/{id}',[serviceController::class,'deleteService'])->name('delete.service');
+
+Route::get('services/{id}', [ServiceController::class, 'updateServicePage'])->name('edit.service.index');
+
+Route::put('update_service/{id}', [ServiceController::class, 'updateService'])->name('update.service');
 
 });
