@@ -77,15 +77,23 @@
                     <li class="nav-label first">Main Menu</li>
                     <!-- <li><a href="index.html"><i class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
                     </li> -->
-                    <li><a href="./index.html" aria-expanded="false"><i
+                    <li><a href="{{ route('owner.dashboard') }}" aria-expanded="false"><i
                                 class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
                     </li>
 
-                    <li><a href="javascript:void()" aria-expanded="false">
+                    <li><a href="{{ route('all.services') }}" aria-expanded="false">
                       <i class="icon icon-app-store"></i><span class="nav-text">Services</span></a>
                     </li>
-                    <li><a href="javascript:void()" aria-expanded="false"><i
+                    <li><a href="{{ route('all.invoices') }}" aria-expanded="false"><i
                                 class="icon icon-chart-bar-33"></i><span class="nav-text">Invoices</span></a>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-single-copy-06"></i><span class="nav-text">Actions</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{ route('user.registration') }}">Register new user</a></li>
+                            <li><a href="{{ route('register.service.page') }}">Register new service</a></li>
+                            <li><a href="{{ route('create.invoice.page') }}">Create an invoice</a></li>
+                        </ul>
                     </li>
                     <li><a href="{{ route('logout') }}" aria-expanded="false"><i class="fa fa-sign-out"></i><span
                             class="nav-text">Logout</span></a>

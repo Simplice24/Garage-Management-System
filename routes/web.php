@@ -16,6 +16,8 @@ Route::get('/', function () {
 
 Route::post('login',[loginController::class,'userAuthentication'])->name('login');
 
+Route::get('login',[loginController::class,'login'])->name('login');
+
 Route::middleware(['auth'])->group(function () {
 
 Route::get('logout',[loginController::class,'logout'])->name('logout');    

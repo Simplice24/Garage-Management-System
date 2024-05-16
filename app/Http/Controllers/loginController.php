@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class loginController extends Controller
 {
+    public function login(){
+        return view('welcome');
+    }
+
     public function userAuthentication(Request $request): RedirectResponse
     {
         try {
