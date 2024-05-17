@@ -13,7 +13,7 @@
     <link href="./vendor/chartist/css/chartist.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 </head>
 
 <body>
@@ -230,8 +230,28 @@
                     </div>
                 </div>
 
-                <canvas id="paidVsUnpaidChart" width="400" height="200"></canvas>
-
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 col-sm-9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Paid vs Unpaid invoices</h4>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="paidVsUnpaidChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Trending services</h4>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="serviceOccurrencesChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
             </div>
         </div>
         <!--**********************************
@@ -273,6 +293,80 @@
 
     <script src="./js/dashboard/dashboard-2.js"></script>
     <!-- Circle progress -->
+
+    <script>
+    var ctx = document.getElementById('paidVsUnpaidChart').getContext('2d');
+    var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Paid', 'Unpaid'], // Existing labels
+        datasets: [{
+        data: [{{ $paidInvoices }}, {{ $unpaidInvoices }}],
+        backgroundColor: ['#28a745', '#dc3545'] // Colors (example)
+        }]
+    },
+    options: {
+        scales: {
+        yAxes: [{
+            ticks: {
+            beginAtZero: true,
+            // Add label and associate it with the y-axis
+            labelString: 'Number of Invoices',
+            yAxisID: 'y-axis'
+            }
+        }],
+        // Define a new y-axis with the specified ID
+        yAxisID: 'y-axis'
+        }
+    }
+    });
+    </script>
+    
+    <script>
+        // Fetch data passed from the controller
+        var serviceOccurrences = @json($serviceOccurrences);
+
+        // Extract service names and occurrence counts from the data
+        var serviceNames = [];
+        var occurrenceCounts = [];
+        var colors = ['#2ecc71', '#f1c40f', '#e74c3c']; // Optional colors
+
+        serviceOccurrences.forEach(function(service) {
+            serviceNames.push(service.name);
+            occurrenceCounts.push(service.occurrences);
+        });
+
+        // Initialize the chart
+        var ctx = document.getElementById('serviceOccurrencesChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: serviceNames, // Array of service names
+                datasets: [{
+                    label: 'Service Occurrences',
+                    data: occurrenceCounts, // Array of occurrence counts for each service
+                    backgroundColor: colors, // Array of colors for each bar (optional)
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        // Rotate x-axis labels for better readability with long names
+                        ticks: {
+                            autoSkip: false, // Show all labels even if crowded
+                            minRotation: 45, // Rotate labels at an angle
+                            fontSize: 12 // Adjust font size for better readability
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
 
 </body>
 

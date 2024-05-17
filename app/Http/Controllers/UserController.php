@@ -7,6 +7,7 @@ use App\Models\Service;
 use App\Models\Invoice;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -37,6 +38,13 @@ class UserController extends Controller
             $averageInvoiceValue = $totalSales / $totalInvoices;
             }
 
+            $serviceOccurrences = DB::table('invoice_service')
+            ->select('services.name', DB::raw('count(*) as occurrences'))
+            ->join('services', 'invoice_service.service_id', '=', 'services.id')
+            ->groupBy('services.name')
+            ->get();
+
+
             return view('dashboard', compact([
               'totalInvoices', 
               'paidInvoices', 
@@ -46,6 +54,7 @@ class UserController extends Controller
               'collectionEfficiency',
               'averageInvoiceValue',
               'totalSales',
+              'serviceOccurrences',
             ]));
           
           } catch (QueryException $e) {
